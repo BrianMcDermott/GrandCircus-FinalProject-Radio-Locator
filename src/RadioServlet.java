@@ -16,6 +16,7 @@ import com.google.gson.Gson;
  */
 @WebServlet("/RadioServlet")
 public class RadioServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
        RadioDAO radio = new RadioDAO();
       
@@ -51,8 +52,10 @@ public class RadioServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String lon = request.getParameter("longitude");
+		String lat = request.getParameter("latitude");
+		System.out.println(lon + " " + lat);
+		RadioDAO.convertDEGtoDMS(lon);
+		RadioDAO.convertDEGtoDMS(lat);
 	}
-
 }

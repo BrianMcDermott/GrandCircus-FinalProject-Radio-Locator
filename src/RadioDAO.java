@@ -23,10 +23,42 @@ public class RadioDAO {
 	static ArrayList<String> city = new ArrayList<String>();
 	static ArrayList<String> genre = new ArrayList<String>();
 	static ArrayList<String> wikiArrayList = new ArrayList<String>();
-
+	public String dLatitude = "";
+	public String mLatitude = "";
+	public String sLatitude = "";
+	public String dLongitude = "";
+	public String mLongitude = "";
+	public String sLongitude = "";
+	
+	
+    public static String[] convertDEGtoDMS(String s) {
+        String[] DMS = new String[3];
+    	String[] parts = s.split("\\.");
+        String part1 = parts[0];
+        double part1Dble = Double.parseDouble(part1);
+        double part2Dble = Math.abs(part1Dble);
+        String part2 = "0." + parts[1];
+        String degrees = String.valueOf(part2Dble);
+        double parted = Double.parseDouble(part2);
+        double result = parted * 60;
+        String s2 = String.valueOf(result);
+        String[] parts2 = s2.split("\\.");
+        String minutes = parts2[0];
+        String part4 = "0." + parts2[1];
+        double parted2 = Double.parseDouble(part4);
+        double result2 = parted2 * 60;
+        String seconds = String.valueOf(result2);
+        DMS[0] = degrees;
+        DMS[1] = minutes;
+        DMS[2] = seconds;
+        for (int i = 0; i < DMS.length; i++) {
+			System.out.println(DMS[i]);
+		}
+        return DMS;
+    }
 	public static ArrayList<RadioStationRadius> getRadius() {
 		URL url;
-		String radiusSite = "https://transition.fcc.gov/fcc-bin/fmq?call=&arn=&state=&city=&freq=0.0&fre2=107.9&serv=&vac=&facid=&asrn=&class=&list=4&dist=50&dlat2=42&mlat2=19&slat2=53&NS=N&dlon2=83&mlon2=2&slon2=44&EW=W&size=9&NextTab=Results+to+Next+Page%2FTab";
+		String radiusSite = "https://transition.fcc.gov/fcc-bin/fmq?call=&arn=&state=&city=&freq=0.0&fre2=107.9&serv=&vac=&facid=&asrn=&class=&list=4&dist=50&dlat2=41&mlat2=52&slat2=54.60&NS=N&dlon2=87&mlon2=37&slon2=23.44&EW=W&size=9&ThisTab=Results+to+This+Page%2FTab";
 		try {
 			// Get URL content
 			url = new URL(radiusSite);
@@ -47,6 +79,7 @@ public class RadioDAO {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
 		return radioList;
 	}
 
@@ -70,7 +103,7 @@ public class RadioDAO {
 		}
 		return radioList;
 	}
-
+	
 	private static Connection connect = null;
 
 	private static PreparedStatement preparedStatement = null;
@@ -84,7 +117,7 @@ public class RadioDAO {
 	public static void addCity() throws SQLException, ClassNotFoundException {
 		getConnection();
 
-		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.detroit (callsign) VALUEs (?)");
+		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.chicago (callsign) VALUEs (?)");
 
 		for (int i = 0; i < radioList.size(); i++) {
 
@@ -117,7 +150,7 @@ public class RadioDAO {
 		System.out.println("test");
 
 		preparedStatement = connect.prepareStatement(
-				"SELECT detroit.callsign, information.frequency,information.city,information.genre FROM detroit INNER JOIN information ON detroit.callsign = information.callsign");
+				"SELECT chicago.callsign, information.frequency,information.city,information.genre FROM chicago INNER JOIN information ON chicago.callsign = information.callsign");
 		ResultSet results = preparedStatement.executeQuery();
 
 		while (results.next()) {
