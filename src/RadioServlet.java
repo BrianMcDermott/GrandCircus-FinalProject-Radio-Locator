@@ -16,52 +16,50 @@ import com.google.gson.Gson;
  */
 @WebServlet("/RadioServlet")
 public class RadioServlet extends HttpServlet {
-
 	private static final long serialVersionUID = 1L;
-       RadioDAO radio = new RadioDAO();
-      
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public RadioServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	RadioDAO radio = new RadioDAO();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<RadioStationRadius> results = null;
-		Gson name = new Gson();
-		try {
-			results = RadioDAO.getRadioStations();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("program finished");
-		response.getWriter().append(name.toJson(results));
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+	public RadioServlet() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String lon = request.getParameter("longitude");
-		String lat = request.getParameter("latitude");
-		System.out.println(lon + " " + lat);
-		String[] CONVlatitude= RadioDAO.convertDEGtoDMS(lat);
-		String[] CONVlongitude = RadioDAO.convertDEGtoDMS(lon);
-	
-		RadioDAO.parseFCC(CONVlongitude, CONVlatitude);
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		ArrayList<RadioStationRadius> results = new ArrayList<>();
+		Gson name = new Gson();
+
 		try {
-			RadioDAO.addCity();
+			results = radio.getRadioStations();
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		response.getWriter().append(name.toJson(results));
+
+		// response.getWriter().append("Served at:
+		// ").append(request.getContextPath());
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		try {
+			radio.truncateTable();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,14 +67,22 @@ public class RadioServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	/*	try {
-			RadioDAO.truncateTable();
+		String lon = request.getParameter("longitude");
+		String lat = request.getParameter("latitude");
+		System.out.println(lon + " " + lat);
+		String[] CONVlatitude = radio.convertDEGtoDMS(lat);
+		String[] CONVlongitude = radio.convertDEGtoDMS(lon);
+
+		ArrayList<String> fccList = radio.parseFCC(CONVlongitude, CONVlatitude);
+		try {
+			radio.addCity(fccList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
-			}
+		}
+		// results.clear();
+	}
 }
