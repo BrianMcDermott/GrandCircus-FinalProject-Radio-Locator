@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,12 +22,7 @@ public class RadioDAO {
 	static ArrayList<String> city = new ArrayList<String>();
 	static ArrayList<String> genre = new ArrayList<String>();
 	static ArrayList<String> wikiArrayList = new ArrayList<String>();
-	public String dLatitude = "";
-	public String mLatitude = "";
-	public String sLatitude = "";
-	public String dLongitude = "";
-	public String mLongitude = "";
-	public String sLongitude = "";
+	static ArrayList<String> fccList = new ArrayList<String>();
 	
 	
     public static String[] convertDEGtoDMS(String s) {
@@ -56,9 +50,10 @@ public class RadioDAO {
 		}
         return DMS;
     }
-	public static ArrayList<RadioStationRadius> getRadius() {
+	/*public static ArrayList<RadioStationRadius> getRadius(String[]y, String[]x) {
 		URL url;
-		String radiusSite = "https://transition.fcc.gov/fcc-bin/fmq?call=&arn=&state=&city=&freq=0.0&fre2=107.9&serv=&vac=&facid=&asrn=&class=&list=4&dist=50&dlat2=41&mlat2=52&slat2=54.60&NS=N&dlon2=87&mlon2=37&slon2=23.44&EW=W&size=9&ThisTab=Results+to+This+Page%2FTab";
+		System.out.println("Checkpoint 1");
+		String radiusSite = "https://transition.fcc.gov/fcc-bin/fmq?call=&arn=&state=&city=&freq=0.0&fre2=107.9&serv=&vac=&facid=&asrn=&class=&list=4&dist=50&dlat2=" +x[0]+"&mlat2=" +x[1]+"&slat2="+x[2]+"&NS=N&dlon2="+y[0]+"&mlon2="+y[1]+"&slon2="+y[2]+"&EW=W&size=9&NextTab=Results+to+Next+Page%2FTab";
 		try {
 			// Get URL content
 			url = new URL(radiusSite);
@@ -69,11 +64,12 @@ public class RadioDAO {
 			BufferedReader htmlInfo = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			toArrayList(htmlInfo);
 
-			/*
+			
 			 * ArrayList<RadioStationRadius> radioList = toArrayList(htmlInfo);
 			 * System.out.println(radioList);
-			 */
-
+			 
+			System.out.println("Checkpoint 2");
+			System.out.println(radiusSite);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -102,7 +98,7 @@ public class RadioDAO {
 
 		}
 		return radioList;
-	}
+	}*/
 	
 	private static Connection connect = null;
 
@@ -110,24 +106,36 @@ public class RadioDAO {
 
 	public static void getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
-
 		connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");
 	}
 
 	public static void addCity() throws SQLException, ClassNotFoundException {
 		getConnection();
+		
 
-		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.chicago (callsign) VALUEs (?)");
-
-		for (int i = 0; i < radioList.size(); i++) {
-
-			preparedStatement.setString(1, radioList.get(i).getCallSign());
+		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.city (callsign) VALUEs (?)");
+		for (int i = 0; i < fccList.size(); i++) {
+			if(fccList.get(i).length() > 4){
+				String moddedCallSign = fccList.get(i).substring(0, 4);
+				preparedStatement.setString(1, moddedCallSign);
+			}else{
+				
+				preparedStatement.setString(1, fccList.get(i));
+			}
 			preparedStatement.executeUpdate();
 
 		}
 
+		
 		connect.close();
 	}
+	
+/*	static void truncateTable() throws SQLException, ClassNotFoundException {
+		getConnection();
+		preparedStatement = connect.prepareStatement("truncate table city");
+		preparedStatement.executeUpdate();
+		connect.close();
+	}*/
 
 	public static void addData() throws ClassNotFoundException, SQLException {
 		getConnection();
@@ -148,9 +156,11 @@ public class RadioDAO {
 		getConnection();
 		ArrayList<RadioStationRadius> radioList = new ArrayList<RadioStationRadius>();
 		System.out.println("test");
-
+//		preparedStatement = connect.prepareStatement("select substring( callsign, 1, 4 ) from radioapp.information");
+//		preparedStatement = connect.prepareStatement("select substring( callsign, 1, 4 ) from radioapp.city");
+		
 		preparedStatement = connect.prepareStatement(
-				"SELECT chicago.callsign, information.frequency,information.city,information.genre FROM chicago INNER JOIN information ON chicago.callsign = information.callsign");
+				"SELECT city.callsign, information.frequency,information.city,information.genre FROM city INNER JOIN information ON city.callsign = information.callsign");
 		ResultSet results = preparedStatement.executeQuery();
 
 		while (results.next()) {
@@ -205,4 +215,28 @@ public class RadioDAO {
 			e.printStackTrace();
 		}
 	}
+	public static void parseFCC(String[]y, String[]x) {
+        String html = "http://www.fccinfo.com/CMDProFacLookup.php?sCurrentService=AM&sKilometers=50&sLatitude="+x[0]+ "-"+ x[1]+"-"+x[2]+"&sLongitude="+ y[0]+"-"+y[1]+"-"+y[2]+"&tabSearchType=Within+Search";
+        try {
+            Document doc = Jsoup.connect(html).get();
+            Elements tableElements = doc.select("tbody");
+            Elements tableRowElements = tableElements.select("tr");
+            
+            for (int i = 8; i < tableRowElements.size(); i++) {
+                Element row = tableRowElements.get(i);
+                Elements rowItems = row.select("td");
+              
+                for (int j = 1; j < rowItems.size(); j+=11) {
+                    fccList.add(rowItems.get(j).text());
+                }
+                
+            }
+            System.out.println("this is the fcc " + fccList);
+            System.out.println("test " + html);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+     
+    }
 }

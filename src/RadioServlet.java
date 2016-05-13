@@ -43,6 +43,7 @@ public class RadioServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println("program finished");
 		response.getWriter().append(name.toJson(results));
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
@@ -55,7 +56,27 @@ public class RadioServlet extends HttpServlet {
 		String lon = request.getParameter("longitude");
 		String lat = request.getParameter("latitude");
 		System.out.println(lon + " " + lat);
-		RadioDAO.convertDEGtoDMS(lon);
-		RadioDAO.convertDEGtoDMS(lat);
-	}
+		String[] CONVlatitude= RadioDAO.convertDEGtoDMS(lat);
+		String[] CONVlongitude = RadioDAO.convertDEGtoDMS(lon);
+	
+		RadioDAO.parseFCC(CONVlongitude, CONVlatitude);
+		try {
+			RadioDAO.addCity();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	/*	try {
+			RadioDAO.truncateTable();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+			}
 }
