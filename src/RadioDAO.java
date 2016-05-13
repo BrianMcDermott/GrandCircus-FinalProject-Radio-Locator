@@ -100,7 +100,6 @@ public class RadioDAO {
 				String moddedCallSign = fccList.get(i).substring(0, 4);
 				preparedStatement.setString(1, moddedCallSign);
 			} else {
-
 				preparedStatement.setString(1, fccList.get(i));
 			}
 			preparedStatement.executeUpdate();
@@ -121,9 +120,14 @@ public class RadioDAO {
 	public void addData() throws ClassNotFoundException, SQLException {
 		Connection connect = getConnection();
 		preparedStatement = connect.prepareStatement(
-				"INSERT IGNORE INTO radioapp.information (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
+				"INSERT IGNORE INTO radioapp.testing (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
 		for (int j = 0; j < callSign.size(); j++) {
-			preparedStatement.setString(1, callSign.get(j));
+			if (callSign.get(j).length() > 4) {
+				String moddedCallSign = callSign.get(j).substring(0, 4);
+				preparedStatement.setString(1, moddedCallSign);
+			}else{
+				preparedStatement.setString(1, callSign.get(j));
+			}
 			preparedStatement.setString(2, frequency.get(j));
 			preparedStatement.setString(3, city.get(j));
 			preparedStatement.setString(4, genre.get(j));
@@ -131,6 +135,7 @@ public class RadioDAO {
 
 		}
 		connect.close();
+		System.out.println("done 333");
 	}
 
 	public ArrayList<RadioStationRadius> getRadioStations() throws ClassNotFoundException, SQLException {
@@ -157,7 +162,17 @@ public class RadioDAO {
 
 	public void ParseWiki() {
 
-		String html = "https://en.wikipedia.org/wiki/List_of_radio_stations_in_Florida";
+		String[] wiki = { "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+				"Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas",
+				"Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+				"Missouri", "Montana", "Nebraska", "Nevada", "New_Hampshire", "New_Jersey", "New_Mexico", "New_York",
+				"North_Carolina", "North_Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode_Island",
+				"South_Carolina", "South_Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+				"West Virginia", "Wisconsin", "Wyoming", "Ontario", "British_Columbia", "Alberta", "Manitoba",
+				"Nova_Scotia" };
+		// for (int z = 0; z < wiki.length; z++) {
+		String html = "https://en.wikipedia.org/wiki/List_of_radio_stations_in_" + wiki[35];
+
 		try {
 			Document doc = Jsoup.connect(html).get();
 			Elements tableElements = doc.select("table.wikitable");
@@ -195,6 +210,7 @@ public class RadioDAO {
 			e.printStackTrace();
 		}
 	}
+	// }
 
 	public ArrayList<String> parseFCC(String[] y, String[] x) {
 		ArrayList<String> fccList = new ArrayList<String>();

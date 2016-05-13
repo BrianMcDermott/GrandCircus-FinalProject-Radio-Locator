@@ -5,11 +5,13 @@ public class RadioApp {
 
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException{
-		
+		//ParseData parsing = new ParseData();
+		RadioDAO instance = new RadioDAO ();
 		//RadioDAO.getRadius();
-	//	RadioDAO.ParseWiki();
+	instance.ParseWiki();
 		//RadioDAO.addCity();
-		//RadioDAO.addData();
+		instance.addData();
 		//RadioDAO.getRadioStations();
+		//parsing.getSites();
 	}
 }
