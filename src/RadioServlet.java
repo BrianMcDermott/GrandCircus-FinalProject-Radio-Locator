@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 public class RadioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	RadioDAO radio = new RadioDAO();
+	ParseData parseData = new ParseData();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -38,17 +39,13 @@ public class RadioServlet extends HttpServlet {
 		Gson name = new Gson();
 
 		try {
-			results = radio.getRadioStations();
+			results = radio.displayRadioStations();
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
 		response.getWriter().append(name.toJson(results));
-
-		// response.getWriter().append("Served at:
-		// ").append(request.getContextPath());
-
 	}
 
 	/**
@@ -70,12 +67,16 @@ public class RadioServlet extends HttpServlet {
 		String lon = request.getParameter("longitude");
 		String lat = request.getParameter("latitude");
 		System.out.println(lon + " " + lat);
-		String[] CONVlatitude = radio.convertDEGtoDMS(lat);
-		String[] CONVlongitude = radio.convertDEGtoDMS(lon);
+		String[] CONVlatitude = parseData.convertDEGtoDMS(lat);
+		String[] CONVlongitude = parseData.convertDEGtoDMS(lon);
+		String fm = "FM";
+		String am = "AM";
 
-		ArrayList<String> fccList = radio.parseFCC(CONVlongitude, CONVlatitude);
+		ArrayList<String> fmfccList = parseData.parseGetRadius(fm, CONVlongitude, CONVlatitude);
+		ArrayList<String> amfccList = parseData.parseGetRadius(am, CONVlongitude, CONVlatitude);
 		try {
-			radio.addCity(fccList);
+			radio.addCityRadius(fmfccList);
+			radio.addCityRadius(amfccList);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
