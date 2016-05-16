@@ -3,6 +3,8 @@
 <head>
 <script src="js/jquery-1.12.3.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.dynatable.js"></script>
+<script src="css/jquery.dynatable.js"></script>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <head>
 <title>Radio Station Finder</title>
@@ -55,7 +57,7 @@ html, body {
                                         + "</td><td>" + resultCity
                                         + "</td><td>" + resultGenre
                                         + "</td></tr>";
-                                
+                                      
                                 $("#radioResults").append(finalResults)
                             }
                     }
@@ -128,8 +130,8 @@ function showPosition(position) {
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
-    <!-- <input type="button" onclick="setupGetRadio()" value="Call2Functions" /> -->
-    <table id="radioResults" style="width: 50%" class="table table-inverse">
+    <table id="radioResults">
     </table>
+
 </body>
 </html>
