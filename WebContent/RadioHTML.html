@@ -5,70 +5,72 @@
 <script src="js/bootstrap.min.js"></script>
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <head>
-    <title>Radio Station Finder</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 75%;
-        width: 100%;
-      }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-    </style>
-
+<title>Radio Station Finder</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+<style>
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    height: 75%;
+    width: 100%;
+}
+#floating-panel {
+    position: absolute;
+    top: 10px;
+    left: 25%;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto', 'sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+</style>
 <script>
-	function setupGetRadio() {
-					$.ajax({url : "RadioServlet",
-					type : 'get',
-					success : function(result) {
-						//result is the info recieved from the radio servlet uRL, and the doGET function//
-							console.log(result);
-							
-							var banner = "<tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr>";
-							$("#radioResults").append(banner)
-							var jsonObj = JSON.parse(result);
-							for (var i = 0; i < jsonObj.length; i++) {
-								var resultCallSign = jsonObj[i].callSign;
-								var resultFrequency = jsonObj[i].frequency;
-								var resultCity = jsonObj[i].city;
-								var resultGenre = jsonObj[i].genre;
-								var finalResults = 
-										  "<tr><td>" + resultCallSign
-										+ "</td><td>" + resultFrequency
-										+ "</td><td>" + resultCity
-										+ "</td><td>" + resultGenre
-										+ "</td></tr>";
-								
-								$("#radioResults").append(finalResults)
-							}
-					}
-				});
-	}
+    function setupGetRadio() {
+    	$("#radioResults").html("");
+                    $.ajax({url : "RadioServlet",
+                    type : 'get',
+                    success : function(result) {
+                        //result is the info recieved from the radio servlet uRL, and the doGET function//
+                            console.log(result);
+                            
+                            var banner = "<tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr>";
+                            $("#radioResults").append(banner)
+                            var jsonObj = JSON.parse(result);
+                            for (var i = 0; i < jsonObj.length; i++) {
+                                var resultCallSign = jsonObj[i].callSign;
+                                var resultFrequency = jsonObj[i].frequency;
+                                var resultCity = jsonObj[i].city;
+                                var resultGenre = jsonObj[i].genre;
+                                var finalResults = 
+                                          "<tr><td>" + resultCallSign
+                                        + "</td><td>" + resultFrequency
+                                        + "</td><td>" + resultCity
+                                        + "</td><td>" + resultGenre
+                                        + "</td></tr>";
+                                
+                                $("#radioResults").append(finalResults)
+                            }
+                    }
+                });
+    }
 </script>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-<div id="floating-panel">
-      <input id="address"  value="" placeholder="Enter a City">
-      <input id="submit" onclick="setTimeout(setupGetRadio, 5000)" type="button" value="Submit">
+    <div id="floating-panel">
+        <button onclick="getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
+        <input id="address" value="" placeholder="Enter a City"> <input
+            id="submit" onclick="setTimeout(setupGetRadio, 5000)" type="button"
+            value="Submit">
     </div>
     <div id="map"></div>
     <script>
@@ -78,19 +80,18 @@
           center: {lat: 39.83, lng: -98.58}
         });
         var geocoder = new google.maps.Geocoder();
-
         document.getElementById('submit').addEventListener('click', function() {
           geocodeAddress(geocoder, map);
         });
       }
-
+      
       function geocodeAddress(geocoder, resultsMap) {
         var address = document.getElementById('address').value;
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             resultsMap.setCenter(results[0].geometry.location);
             var marker = new google.maps.Marker({
-            	
+                
               map: resultsMap,
               position: results[0].geometry.location
             });
@@ -98,7 +99,7 @@
             var lat = results[0].geometry.location.lat();
             console.log(lon, lat);
             $.post("RadioServlet", {latitude : lat, longitude:lon});
-				
+                
             
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -108,14 +109,27 @@
       }
     
     </script>
+    <p id="test"></p>
+    <script>
+var x = document.getElementById("test");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+    var lon = position.coords.longitude;
+    var lat = position.coords.latitude;
+    $.post("RadioServlet", {latitude : lat, longitude:lon});
+}
+</script>
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
-<!-- <input type="button" onclick="setupGetRadio()" value="Call2Functions" /> -->
-
-	<table id="radioResults" style="width: 50%" class="table table-inverse">
-
-	</table>
-	
+    <!-- <input type="button" onclick="setupGetRadio()" value="Call2Functions" /> -->
+    <table id="radioResults" style="width: 50%" class="table table-inverse">
+    </table>
 </body>
 </html>

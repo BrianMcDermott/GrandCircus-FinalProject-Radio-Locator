@@ -55,7 +55,6 @@ public class ParseData {
 			e.printStackTrace();
 		}
 		return fccList;
-
 	}
 
 }

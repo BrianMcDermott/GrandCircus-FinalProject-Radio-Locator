@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RadioDAO {
-	static ArrayList<String> callSign = new ArrayList<String>();
-	static	ArrayList<String> frequency = new ArrayList<String>();
-	static	ArrayList<String> city = new ArrayList<String>();
-	static	ArrayList<String> genre = new ArrayList<String>();
-	
+	ArrayList<String> callSign = new ArrayList<String>();
+	ArrayList<String> frequency = new ArrayList<String>();
+	ArrayList<String> city = new ArrayList<String>();
+	ArrayList<String> genre = new ArrayList<String>();
+
 	private PreparedStatement preparedStatement = null;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
@@ -44,12 +44,10 @@ public class RadioDAO {
 	}
 
 	public void addRadioInfo() throws ClassNotFoundException, SQLException {
-		
-
 
 		Connection connect = getConnection();
 		preparedStatement = connect.prepareStatement(
-				"INSERT INTO radioapp.testing (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
+				"INSERT INTO radioapp.information (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
 		for (int j = 0; j < callSign.size(); j++) {
 			if (callSign.get(j).length() > 4) {
 				String moddedCallSign = callSign.get(j).substring(0, 4);
@@ -72,7 +70,7 @@ public class RadioDAO {
 		ArrayList<RadioStationRadius> radioList = new ArrayList<RadioStationRadius>();
 
 		preparedStatement = connect.prepareStatement(
-				"SELECT city.callsign, testing.frequency,testing.city,testing.genre FROM city INNER JOIN testing ON city.callsign = testing.callsign");
+				"SELECT city.callsign, information.frequency,information.city,information.genre FROM city INNER JOIN information ON city.callsign = information.callsign");
 		ResultSet results = preparedStatement.executeQuery();
 
 		while (results.next()) {
