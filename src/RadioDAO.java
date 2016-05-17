@@ -6,10 +6,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RadioDAO {
-	ArrayList<String> callSign = new ArrayList<String>();
-	ArrayList<String> frequency = new ArrayList<String>();
-	ArrayList<String> city = new ArrayList<String>();
-	ArrayList<String> genre = new ArrayList<String>();
+	 ArrayList<String> callSign = new ArrayList<String>();
+	 ArrayList<String> frequency = new ArrayList<String>();
+	 ArrayList<String> city = new ArrayList<String>();
+	 ArrayList<String> genre = new ArrayList<String>();
 
 	private PreparedStatement preparedStatement = null;
 

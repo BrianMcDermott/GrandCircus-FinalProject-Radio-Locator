@@ -44,8 +44,9 @@ public class RadioServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
-		response.getWriter().append(name.toJson(results));
+	
+		response.getWriter().append("{\"data\":" + name.toJson(results)+"}");
+		
 	}
 
 	/**
@@ -84,6 +85,6 @@ public class RadioServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// results.clear();
+		
 	}
 }

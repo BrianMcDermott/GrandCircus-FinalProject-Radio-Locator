@@ -3,8 +3,13 @@
 <head>
 <script src="js/jquery-1.12.3.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 <link href="css/bootstrap.min.css" rel="stylesheet">
-<head>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css"/>
+
+<script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		</script>
 <title>Radio Station Finder</title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
@@ -34,32 +39,22 @@ html, body {
 </style>
 <script>
     function setupGetRadio() {
-    	$("#radioResults").html("");
-                    $.ajax({url : "RadioServlet",
-                    type : 'get',
-                    success : function(result) {
-                        //result is the info recieved from the radio servlet uRL, and the doGET function//
-                            console.log(result);
-                            
-                            var banner = "<tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr>";
-                            $("#radioResults").append(banner)
-                            var jsonObj = JSON.parse(result);
-                            for (var i = 0; i < jsonObj.length; i++) {
-                                var resultCallSign = jsonObj[i].callSign;
-                                var resultFrequency = jsonObj[i].frequency;
-                                var resultCity = jsonObj[i].city;
-                                var resultGenre = jsonObj[i].genre;
-                                var finalResults = 
-                                          "<tr><td>" + resultCallSign
-                                        + "</td><td>" + resultFrequency
-                                        + "</td><td>" + resultCity
-                                        + "</td><td>" + resultGenre
-                                        + "</td></tr>";
-                                      
-                                $("#radioResults").append(finalResults)
-                            }
-                    }
-                });
+    	/* 	$("#radioResults").html(""); */
+
+   	$('#radioResults').DataTable( {
+            "ajax": "RadioServlet",
+            "columns": [
+                { "data": "callSign" },
+                { "data": "frequency" },
+                { "data": "city" },
+                { "data": "genre" }
+            ]
+        } );
+  
+
+   	
+   	
+    
     }
 </script>
 <meta charset="ISO-8859-1">
@@ -99,7 +94,7 @@ html, body {
             var lat = results[0].geometry.location.lat();
             console.log(lon, lat);
             $.post("RadioServlet", {latitude : lat, longitude:lon});
-                
+           
             
           } else {
             alert('Geocode was not successful for the following reason: ' + status);
@@ -123,12 +118,22 @@ function showPosition(position) {
     var lon = position.coords.longitude;
     var lat = position.coords.latitude;
     $.post("RadioServlet", {latitude : lat, longitude:lon});
+    
 }
 </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
-    <table id="radioResults">
+    <table id="radioResults" class ="display">
+    <thead>
+        <!--     <tr>
+                <th>Call Sign</th>
+                <th>Frequency</th>
+                <th>City</th>
+                <th>Genre</th>
+            </tr> -->
+            
+        </thead>
     </table>
 
 </body>
