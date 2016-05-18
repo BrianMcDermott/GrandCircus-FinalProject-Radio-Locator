@@ -7,10 +7,13 @@
 <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css"/>
 
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> -->
-<script type="text/javascript" src="js/datatables.min.js"></script>
-		<script type="text/javascript" charset="utf-8">
-		</script>
+
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> 
+
+ <script type="text/javascript" src="js/datatables.min.js"></script>
+		<!-- <script type="text/javascript" charset="utf-8">
+		</script> -->
 <title>Radio Station Finder</title>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="utf-8">
@@ -19,20 +22,19 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
+    color: #0096aa;
 }
 #map {
-    height: 122%;
+    height: 125%;
     width: 50%;
     float: left;
 }
 #floating-panel {
     position: absolute;
     top: 10px;
-    left: 25%;
+    left: 10%;
     z-index: 5;
-    background-color: #fff;
     padding: 5px;
-    border: 1px solid #999;
     text-align: center;
     font-family: 'Roboto', 'sans-serif';
     line-height: 30px;
@@ -43,6 +45,25 @@ height: 100%;
 width: 50%;
 float: right;
 }
+/* table.display tbody tr:nth-child(even) td{
+    background-color: #466F75;
+}
+ 
+table.display tbody tr:nth-child(odd) td {
+    background-color: #466F75;
+}
+.ui-widget {
+	font-family: Helvetica;
+	font-size: 1.1em;
+}
+ */
+
+
+/* #radiotable {
+	display:none;
+} */
+body {background-color:#466F75;}
+
 
 
 </style>
@@ -69,9 +90,9 @@ float: right;
 
 </head>
 <body>
- <header>
+<!--  <header>
     <h1>Radio Station Finder</h1>
-  </header>
+  </header> -->
     <div id="floating-panel">
         <button onclick="getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
         <input id="address" value="" placeholder="Enter a City"> <input
@@ -80,9 +101,13 @@ float: right;
     </div>
     
     <script>
+    var map;
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+    	  var stylearray = [{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#0096aa"},{"weight":"0.30"},{"saturation":"-75"},{"lightness":"5"},{"gamma":"1"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#0096aa"},{"saturation":"-75"},{"lightness":"5"}]},{"featureType":"administrative","elementType":"labels.text.stroke","stylers":[{"color":"#f6a828"},{"visibility":"on"},{"weight":"6"},{"saturation":"0"},{"lightness":"0"}]},{"featureType":"administrative","elementType":"labels.icon","stylers":[{"visibility":"on"},{"color":"#e6007e"},{"weight":"1"}]},{"featureType":"landscape","elementType":"all","stylers":[{"color":"#f6a828"},{"saturation":"-28"},{"lightness":"0"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"road","elementType":"all","stylers":[{"color":"#0096aa"},{"visibility":"simplified"},{"saturation":"-75"},{"lightness":"5"},{"gamma":"1"}]},{"featureType":"road","elementType":"labels.text","stylers":[{"visibility":"on"},{"color":"#f6a828"},{"weight":8},{"saturation":"-28"},{"lightness":"0"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#0096aa"},{"weight":8},{"lightness":"5"},{"gamma":"1"},{"saturation":"-75"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"simplified"},{"color":"#0096aa"},{"saturation":"-75"},{"lightness":"5"},{"gamma":"1"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#0096aa"},{"saturation":"-75"},{"lightness":"5"},{"gamma":"1"}]},{"featureType":"water","elementType":"labels.text","stylers":[{"visibility":"simplified"},{"color":"#"},{"saturation":"-28"},{"lightness":"0"}]},{"featureType":"water","elementType":"labels.icon","stylers":[{"visibility":"off"}]}];
+         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
+          styles: stylearray,
+
           center: {lat: 39.83, lng: -98.58}
         });
         var geocoder = new google.maps.Geocoder();
@@ -96,11 +121,14 @@ float: right;
         geocoder.geocode({'address': address}, function(results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
+            resultsMap.setZoom(12);
+         /*    var marker = new google.maps.Marker({
                 
               map: resultsMap,
               position: results[0].geometry.location
-            });
+              
+            }); */
+            
             var lon = results[0].geometry.location.lng();
             var lat = results[0].geometry.location.lat();
             console.log(lon, lat);
@@ -131,6 +159,8 @@ function getLocation() {
 function showPosition(position) {
     var lon = position.coords.longitude;
     var lat = position.coords.latitude;
+    map.setCenter({lat: lat, lng: lon});
+    map.setZoom(12);
     $.post("RadioServlet", {latitude : lat, longitude:lon});
     
 }
