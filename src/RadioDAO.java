@@ -6,16 +6,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class RadioDAO {
-	 ArrayList<String> callSign = new ArrayList<String>();
-	 ArrayList<String> frequency = new ArrayList<String>();
-	 ArrayList<String> city = new ArrayList<String>();
-	 ArrayList<String> genre = new ArrayList<String>();
+		ArrayList<String> callSign = new ArrayList<String>();
+		ArrayList<String> frequency = new ArrayList<String>();
+		ArrayList<String> city = new ArrayList<String>();
+		ArrayList<String> genre = new ArrayList<String>();
 
 	private PreparedStatement preparedStatement = null;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");
+		/*Class.forName("org.postgresql.Driver");
+		return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "grandcircus123");*/
+		/*Class.forName("org.postgresql.Driver");
+		return DriverManager.getConnection("jdbc:postgresql://ec2-23-21-234-160.compute-1.amazonaws.com:5432/d4sdtdpmp9mg03?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", "msbfrquyzuudyj", "hOmIzHJQYRrLW5TkBu9woflYTi");*/
+		/*Class.forName("com.mysql.jdbc.Driver");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");*/
+		Class.forName("org.postgresql.Driver");
+		return DriverManager.getConnection("jdbc:postgresql://ec2-23-21-234-160.compute-1.amazonaws.com:5432/d4sdtdpmp9mg03", "msbfrquyzuudyj", "hOmIzHJQYRrLW5TkBu9woflYTi");
 	}
 
 	public void truncateTable() throws SQLException, ClassNotFoundException {
@@ -31,6 +37,7 @@ public class RadioDAO {
 		Connection connect = getConnection();
 
 		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.city (callsign) VALUEs (?)");
+//		preparedStatement = connect.prepareStatement("INSERT INTO public.city (callsign) VALUEs (?) ON CONFLICT DO NOTHING");
 		for (int i = 0; i < fccList.size(); i++) {
 			if (fccList.get(i).length() > 4) {
 				String moddedCallSign = fccList.get(i).substring(0, 4);
@@ -47,7 +54,7 @@ public class RadioDAO {
 
 		Connection connect = getConnection();
 		preparedStatement = connect.prepareStatement(
-				"INSERT INTO radioapp.information (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
+				"INSERT INTO information (callsign, frequency, city, genre) VALUES (?, ?, ?, ?)");
 		for (int j = 0; j < callSign.size(); j++) {
 			if (callSign.get(j).length() > 4) {
 				String moddedCallSign = callSign.get(j).substring(0, 4);
