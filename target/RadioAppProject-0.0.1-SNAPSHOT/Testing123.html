@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css"/> -->
+    <!-- Bootstrap Core CSS -->
+    <!-- Custom CSS -->
+    <link href="css/bootstrap1.min.css" rel="stylesheet">
+    <link href="css/zac.css" rel="stylesheet">
+    <link href="css/scrolling-nav.css" rel="stylesheet">
+    
+
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11,r-2.0.2/datatables.min.css"/>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Radio Locator</title>
+
+
+    <style>
+#map {
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+#floating-panel {
+    position: absolute;
+    top: 107%;
+    left: 10%;
+    z-index: 5;
+    padding: 5px;
+    text-align: center;
+    font-family: 'Roboto', 'sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+#radiotable{
+overflow-x: hidden;
+max-height: 100%;
+overflow-y: scroll;
+width: 50%;
+float: right;
+}
+@font-face {
+    font-family: "HarabaraHand";
+    src: url(css/HarabaraHand.ttf);
+}
+h1 {
+    font-size: 100px;
+    color: #e6000;
+    font-weight: bold;
+    font-family: HarabaraHand, "Helvetica", Georgia, Serif;
+     text-shadow: .75px .75px 0px #c43235; 
+}
+h2 {
+    font-size: 35px;
+    color: #e6000;
+    font-weight: bold;
+    font-family: HarabaraHand,"Helvetica", Georgia, Serif;
+   text-shadow: .5px .5px 0px #c43235;
+}
+
+#loading {
+    
+    display: none;
+    vertical-align: middle;
+}
+
+
+</style>
+</head>
+
+<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+   				            
+                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                     <li>
+                        <a class="page-scroll" href="#about">Radio Stations</a>
+                    </li> 
+                   
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Section -->
+    <section id="intro" class="intro-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                	<br>
+                	<br>
+                	<br>
+                    <h1>Radio Locator</h1>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h2>Locate Radio Stations within 30 miles of your location.</h2> 
+                    <a class="btn btn-default page-scroll" href="#about">Enter a City</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+ <div id="floating-panel">
+        <button onclick="start(),setTimeout(stop,5000),getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
+        <input id="address" value="" placeholder="Enter a City"> <input
+            id="submit" onclick="start(),setTimeout(stop,5000),setTimeout(setupGetRadio, 5000)" type="button"
+            value="Submit">
+    </div>
+      <div id="radiotable">
+      <table id="radioResults" class ="display" >
+    </table>
+     <div id="loading">
+            <img src="http://i1269.photobucket.com/albums/jj591/aditya9172/loaing2.gif">
+            </div>
+     </div>
+       
+ <div id="map"></div>
+          
+      <!--   <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>About Section</h1>
+                </div>
+            </div>
+        </div> -->
+    </section>
+       <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Contact Us</h1>
+                    <h2>Zac Manring: <a href="https://www.linkedin.com/in/zacharymanring">LinkedIn</a></h2>
+                    <h2>Brian McDermott: <a href="https://www.linkedin.com/in/brianmcdermott248">LinkedIn</a></h2>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- jQuery -->
+    <script src="js/jquery-1.12.3.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script> 
+
+    <!-- Scrolling Nav JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrolling-nav.js"></script>
+<script>
+    function setupGetRadio() {
+    	$("#radioResults").html("");
+    	var banner = "<thead><tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr></thead>";
+							$("#radioResults").append(banner);
+   	$('#radioResults').DataTable( {
+   			destroy: true,
+            "ajax": "RadioServlet",
+            "columns": [
+                { "data": "callSign" },
+                { "data": "frequency" },
+                { "data": "city" },
+                { "data": "genre" }
+            ]
+        } );   
+    }
+</script>
+ <script>
+    var map;
+      function initMap() {
+    	  var stylearray = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
+          map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          styles: stylearray,
+
+          center: {lat: 39.83, lng: -98.58}
+        });
+        var geocoder = new google.maps.Geocoder();
+        document.getElementById('submit').addEventListener('click', function() {
+          geocodeAddress(geocoder, map);
+        });
+      }
+      
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            resultsMap.setCenter(results[0].geometry.location);
+            resultsMap.setZoom(12);
+            
+            var lon = results[0].geometry.location.lng();
+            var lat = results[0].geometry.location.lat();
+            console.log(lon, lat);
+            $.post("RadioServlet", {latitude : lat, longitude:lon});
+           
+            
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }  
+        });
+        
+      }
+      function clearMarkers() {
+    	  setMapOnAll(null);
+    	}
+    
+    </script>
+     <script>
+var x = document.getElementById("test");
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+function showPosition(position) {
+    var lon = position.coords.longitude;
+    var lat = position.coords.latitude;
+    map.setCenter({lat: lat, lng: lon});
+    map.setZoom(12);
+    $.post("RadioServlet", {latitude : lat, longitude:lon});
+    
+}
+function stop() {
+    $('#loading').hide();
+}
+function start() {
+    $('#loading').show();
+}
+</script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
+    </script>
+<!--     <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> 
+ -->
+<script type="text/javascript" src="js/datatables.min.js"></script> 
+
+ 
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11,r-2.0.2/datatables.min.js"></script>
+ -->    
+</body>
+
+</html>
