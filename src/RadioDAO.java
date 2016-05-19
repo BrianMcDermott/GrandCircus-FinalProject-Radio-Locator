@@ -36,8 +36,8 @@ public class RadioDAO {
 
 		Connection connect = getConnection();
 
-		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.city (callsign) VALUEs (?)");
-//		preparedStatement = connect.prepareStatement("INSERT INTO public.city (callsign) VALUEs (?) ON CONFLICT DO NOTHING");
+//		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.city (callsign) VALUEs (?)");
+		preparedStatement = connect.prepareStatement("INSERT INTO city (callsign) VALUEs (?) ON CONFLICT DO NOTHING");
 		for (int i = 0; i < fccList.size(); i++) {
 			if (fccList.get(i).length() > 4) {
 				String moddedCallSign = fccList.get(i).substring(0, 4);
