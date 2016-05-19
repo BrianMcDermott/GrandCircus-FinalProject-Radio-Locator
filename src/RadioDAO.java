@@ -14,18 +14,18 @@ public class RadioDAO {
 	private PreparedStatement preparedStatement = null;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		/* System.getenv("DATABASE_URL_PARAMS");
-		 System.getenv("DATABASE_USERNAME");
-		 System.getenv("DATABASE_PASSWORD");*/
-		 System.out.println(System.getenv("DATABASE_URL_PARAMS") + "," + System.getenv("DATABASE_USERNAME") + "," + System.getenv("DATABASE_PASSWORD"));
+		 String URL = System.getenv("DATABASE_URL_PARAMS");
+		 String Username = System.getenv("DATABASE_USERNAME");
+		 String Password = System.getenv("DATABASE_PASSWORD");
+		 //System.out.println(System.getenv("DATABASE_URL_PARAMS") + "," + System.getenv("DATABASE_USERNAME") + "," + System.getenv("DATABASE_PASSWORD"));
 		/*Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "grandcircus123");*/
 		/*Class.forName("org.postgresql.Driver");
-		return DriverManager.getConnection("jdbc:postgresql://ec2-23-21-234-160.compute-1.amazonaws.com:5432/d4sdtdpmp9mg03?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", "msbfrquyzuudyj", "hOmIzHJQYRrLW5TkBu9woflYTi");*/
+		return DriverManager.getConnection("XXXXXXXXXXX?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", "XXXX", "XXXXX");*/
 		/*Class.forName("com.mysql.jdbc.Driver");
 		return DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");*/
 		Class.forName("org.postgresql.Driver");
-		return DriverManager.getConnection("jdbc:postgresql://ec2-23-21-234-160.compute-1.amazonaws.com:5432/d4sdtdpmp9mg03", "msbfrquyzuudyj", "hOmIzHJQYRrLW5TkBu9woflYTi");
+		return DriverManager.getConnection(URL, Username, Password);
 	}
 
 	public void truncateTable() throws SQLException, ClassNotFoundException {
