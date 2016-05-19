@@ -14,6 +14,10 @@ public class RadioDAO {
 	private PreparedStatement preparedStatement = null;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
+		/* System.getenv("DATABASE_URL_PARAMS");
+		 System.getenv("DATABASE_USERNAME");
+		 System.getenv("DATABASE_PASSWORD");*/
+		 System.out.println(System.getenv("DATABASE_URL_PARAMS") + "," + System.getenv("DATABASE_USERNAME") + "," + System.getenv("DATABASE_PASSWORD"));
 		/*Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "grandcircus123");*/
 		/*Class.forName("org.postgresql.Driver");
