@@ -6,6 +6,7 @@
     <!-- Bootstrap Core CSS -->
     <!-- Custom CSS -->
     <link href="css/bootstrap1.min.css" rel="stylesheet">
+    <link href="css/zac.css" rel="stylesheet">
     <link href="css/scrolling-nav.css" rel="stylesheet">
     
 
@@ -18,7 +19,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Radio Station Locator</title>
+    <title>Radio Locator</title>
 
 
     <style>
@@ -29,7 +30,7 @@
 }
 #floating-panel {
     position: absolute;
-    top: 105%;
+    top: 107%;
     left: 10%;
     z-index: 5;
     padding: 5px;
@@ -39,10 +40,38 @@
     padding-left: 10px;
 }
 #radiotable{
-height: 100%;
+overflow-x: hidden;
+max-height: 100%;
+overflow-y: scroll;
 width: 50%;
 float: right;
 }
+@font-face {
+    font-family: "HarabaraHand";
+    src: url(css/HarabaraHand.ttf);
+}
+h1 {
+    font-size: 100px;
+    color: #e6000;
+    font-weight: bold;
+    font-family: HarabaraHand, "Helvetica", Georgia, Serif;
+     text-shadow: .75px .75px 0px #c43235; 
+}
+h2 {
+    font-size: 35px;
+    color: #e6000;
+    font-weight: bold;
+    font-family: HarabaraHand,"Helvetica", Georgia, Serif;
+   text-shadow: .5px .5px 0px #c43235;
+}
+
+#loading {
+    
+    display: none;
+    vertical-align: middle;
+}
+
+
 </style>
 </head>
 
@@ -60,7 +89,8 @@ float: right;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Main</a>
+   				            
+                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -70,9 +100,9 @@ float: right;
                     <li class="hidden">
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
-                    <li>
-                        <a class="page-scroll" href="#about">Get Radio Stations</a>
-                    </li>
+                     <li>
+                        <a class="page-scroll" href="#about">Radio Stations</a>
+                    </li> 
                    
                     <li>
                         <a class="page-scroll" href="#contact">Contact</a>
@@ -89,9 +119,18 @@ float: right;
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Enter Radio Title Here</h1>
-                    <p> Welcome! Locate your Radio Stations now </p>
-                    <a class="btn btn-default page-scroll" href="#about">Enter a city now!</a>
+                	<br>
+                	<br>
+                	<br>
+                    <h1>Radio Locator</h1>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <h2>Locate Radio Stations within 30 miles of your location.</h2> 
+                    <a class="btn btn-default page-scroll" href="#about">Enter a City</a>
                 </div>
             </div>
         </div>
@@ -100,14 +139,17 @@ float: right;
     <!-- About Section -->
     <section id="about" class="about-section">
  <div id="floating-panel">
-        <button onclick="getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
+        <button onclick="start(),setTimeout(stop,5000),getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
         <input id="address" value="" placeholder="Enter a City"> <input
-            id="submit" onclick="setTimeout(setupGetRadio, 5000)" type="button"
+            id="submit" onclick="start(),setTimeout(stop,5000),setTimeout(setupGetRadio, 5000)" type="button"
             value="Submit">
     </div>
       <div id="radiotable">
       <table id="radioResults" class ="display" >
     </table>
+     <div id="loading">
+            <img src="http://i1269.photobucket.com/albums/jj591/aditya9172/loaing2.gif">
+            </div>
      </div>
        
  <div id="map"></div>
@@ -119,6 +161,18 @@ float: right;
                 </div>
             </div>
         </div> -->
+    </section>
+       <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Contact Us</h1>
+                    <h2>Zac Manring: <a href="https://www.linkedin.com/in/zacharymanring">LinkedIn</a></h2>
+                    <h2>Brian McDermott: <a href="https://www.linkedin.com/in/brianmcdermott248">LinkedIn</a></h2>
+                </div>
+            </div>
+        </div>
     </section>
 
 
@@ -134,6 +188,7 @@ float: right;
     <script src="js/scrolling-nav.js"></script>
 <script>
     function setupGetRadio() {
+    	$("#radioResults").html("");
     	var banner = "<thead><tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr></thead>";
 							$("#radioResults").append(banner);
    	$('#radioResults').DataTable( {
@@ -205,17 +260,23 @@ function showPosition(position) {
     $.post("RadioServlet", {latitude : lat, longitude:lon});
     
 }
+function stop() {
+    $('#loading').hide();
+}
+function start() {
+    $('#loading').show();
+}
 </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
 <!--     <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> 
  -->
- <script type="text/javascript" src="js/datatables.min.js"></script>
+<script type="text/javascript" src="js/datatables.min.js"></script> 
 
  
-<script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11,r-2.0.2/datatables.min.js"></script>
-    
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11,r-2.0.2/datatables.min.js"></script>
+ -->    
 </body>
 
 </html>

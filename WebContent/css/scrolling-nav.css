@@ -9,12 +9,14 @@ body {
     height: 100%;
     color: Black;
     font-weight: bold;
+    
 }
 
 html {
     width: 100%;
     height: 100%;
 }
+
 
 @media(min-width:767px) {
     .navbar {
@@ -38,11 +40,19 @@ of those sections to manage the look and feel of the site. */
     padding-top: 150px;
     text-align: center;
     background-image: url("http://jourent.com/slide/music%20(slide).jpg");
+     color: White;
 }
 
 .about-section {
     height: 100%;
-/*  	padding-top: 150px;  */
+	padding-top: 3.75%;
     text-align: center;
     background: #fafafa;
+}
+.contact-section {
+    height: 100%;
+    padding-top: 150px;
+    text-align: center;
+    background-image: url("http://motherboard-images.vice.com/content-images/article/no-id/1439596010559229.jpg");
+     color: White;
 }
