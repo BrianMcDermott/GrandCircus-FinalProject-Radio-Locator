@@ -48,6 +48,9 @@ of those sections to manage the look and feel of the site. */
 	padding-top: 3.75%;
     text-align: center;
     background: #fafafa;
+    font-family: Helvetica;
+    vertical-align: middle;
+    text-align: middle;
 }
 .contact-section {
     height: 100%;

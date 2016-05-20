@@ -64,13 +64,25 @@ h2 {
     font-family: HarabaraHand,"Helvetica", Georgia, Serif;
    text-shadow: .5px .5px 0px #c43235;
 }
+h3 {
+    font-size: 45px;
+    color: #e6000;
+    font-weight: bold;
+    font-family: Helvetica;
+   text-shadow: .5px .5px 0px #c43235;
+}
 
 #loading {
     
-    display: none;
+   font-family: Helvetica;
     vertical-align: middle;
+    text-align: middle;
 }
-
+#about{
+font-family: Helvetica;
+    vertical-align: middle;
+    text-align: middle;
+}
 
 </style>
 </head>
@@ -139,16 +151,26 @@ h2 {
     <!-- About Section -->
     <section id="about" class="about-section">
  <div id="floating-panel">
-        <button onclick="start(),setTimeout(stop,5000),getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
+        <button onclick="setTimeout(stop,5000),getLocation(),setTimeout(setupGetRadio, 5000)">Get My Location</button>
         <input id="address" value="" placeholder="Enter a City"> <input
-            id="submit" onclick="start(),setTimeout(stop,5000),setTimeout(setupGetRadio, 5000)" type="button"
+            id="submit" onclick="setTimeout(stop,5000),setTimeout(setupGetRadio, 5000)" type="button"
             value="Submit">
     </div>
       <div id="radiotable">
       <table id="radioResults" class ="display" >
     </table>
      <div id="loading">
-            <img src="http://i1269.photobucket.com/albums/jj591/aditya9172/loaing2.gif">
+           
+            <h2 id= "loading">1.Enter Your City or select My Location
+            <br>
+            <br>
+            <br>
+            	2.Please wait while the table loads
+            	  	<br>
+            <br>
+            <br>
+            	3.Use the Sorters/Search Bars to find your intended genre</h2>
+          <!--   <img src="http://i1269.photobucket.com/albums/jj591/aditya9172/loaing2.gif">  -->
             </div>
      </div>
        
@@ -168,8 +190,13 @@ h2 {
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Contact Us</h1>
-                    <h2>Zac Manring: <a href="https://www.linkedin.com/in/zacharymanring">LinkedIn</a></h2>
-                    <h2>Brian McDermott: <a href="https://www.linkedin.com/in/brianmcdermott248">LinkedIn</a></h2>
+                    <h3 id="contact">Zac Manring: https://www.linkedin.com/in/zacharymanring
+                    <br>
+                    manring.zac@gmail.com
+                    </h3>
+                    <h3 id="contact">Brian McDermott: https://www.linkedin.com/in/brianmcdermott248
+                    <br>
+                    brianmcdermott248@gmail.com</h3>
                 </div>
             </div>
         </div>
@@ -263,9 +290,9 @@ function showPosition(position) {
 function stop() {
     $('#loading').hide();
 }
-function start() {
+/* function start() {
     $('#loading').show();
-}
+} */
 </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
