@@ -14,19 +14,19 @@ public class RadioDAO {
 	private PreparedStatement preparedStatement = null;
 
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
-		 String URL = System.getenv("DATABASE_URL_PARAMS");
+	/*	 String URL = System.getenv("DATABASE_URL_PARAMS");
 		 String Username = System.getenv("DATABASE_USERNAME");
-		 String Password = System.getenv("DATABASE_PASSWORD");
+		 String Password = System.getenv("DATABASE_PASSWORD");*/
 		 //System.out.println(System.getenv("DATABASE_URL_PARAMS") + "," + System.getenv("DATABASE_USERNAME") + "," + System.getenv("DATABASE_PASSWORD"));
 		/*Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "grandcircus123");*/
 		/*Class.forName("org.postgresql.Driver");
 		return DriverManager.getConnection("XXXXXXXXXXX?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory", "XXXX", "XXXXX");*/
-		/*Class.forName("com.mysql.jdbc.Driver");
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");*/
+		Class.forName("com.mysql.jdbc.Driver");
+		return DriverManager.getConnection("jdbc:mysql://localhost:3306/radioapp", "root", "sesame");
 		 //postgress heroku below
-	Class.forName("org.postgresql.Driver");
-	return DriverManager.getConnection(URL, Username, Password);
+	/*Class.forName("org.postgresql.Driver");
+	return DriverManager.getConnection(URL, Username, Password);*/
 	}
 
 	public void truncateTable() throws SQLException, ClassNotFoundException {
@@ -41,9 +41,9 @@ public class RadioDAO {
 
 		Connection connect = getConnection();
 
-		//preparedStatement = connect.prepareStatement("INSERT IGNORE INTO city (callsign) VALUEs (?)");
-		preparedStatement = connect.prepareStatement("INSERT INTO city (callsign) VALUEs (?) ON CONFLICT DO NOTHING");
-		for (int i = 0; i < fccList.size(); i++) {
+		preparedStatement = connect.prepareStatement("INSERT IGNORE INTO radioapp.city (callsign) VALUEs (?)");
+/*		preparedStatement = connect.prepareStatement("INSERT INTO city (callsign) VALUEs (?) ON CONFLICT DO NOTHING");
+*/		for (int i = 0; i < fccList.size(); i++) {
 			if (fccList.get(i).length() > 4) {
 				String moddedCallSign = fccList.get(i).substring(0, 4);
 				preparedStatement.setString(1, moddedCallSign);
