@@ -37,10 +37,16 @@ of those sections to manage the look and feel of the site. */
 
 .intro-section {
     height: 100%;
-    padding-top: 150px;
+    padding-top: 100px;
     text-align: center;
     background-image: url("http://jourent.com/slide/music%20(slide).jpg");
+    background-size: 1280px 853px;
+    background-repeat: no-repeat;
      color: White;
+}
+.logo {
+	height: 100%;
+	text-align: center;
 }
 
 .about-section {
@@ -53,9 +59,11 @@ of those sections to manage the look and feel of the site. */
     text-align: middle;
 }
 .contact-section {
-    height: 100%;
+    height: 110%;
     padding-top: 150px;
-    text-align: center;
-    background-image: url("http://motherboard-images.vice.com/content-images/article/no-id/1439596010559229.jpg");
+    text-align: left;
+    background-image: url("http://i667.photobucket.com/albums/vv39/brianmcdermott248/grayRadio_zpscdg49r36.jpg");
+    background-size: 1280px 853px;
+    background-repeat: no-repeat;
      color: White;
 }
