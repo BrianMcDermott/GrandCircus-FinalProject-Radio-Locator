@@ -66,11 +66,11 @@ h2 {
    text-shadow: .5px .5px 0px #c43235;
 }
 h3 {
-    font-size: 22px;
+    font-size: 28px;
     color: #e6000;
     font-weight: bold;
     font-family: Helvetica;
-   text-shadow: .5px .5px 0px #c43235;
+   /* text-shadow: .5px .5px 0px #c43235; */
 }
 
 #loading {
@@ -176,31 +176,29 @@ font-family: Helvetica;
                     <h1>Contact Us</h1>
                     <h3 id="contact"> •Zac Manring
                     <br>
-                    <a href=https://www.linkedin.com/in/zacharymanring>LinkedIn</a>
+                   <a href="https://www.linkedin.com/pub/zachary-manring/119/593/511">
+      
+          <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_myprofile_160x33.png" width="160" height="33" border="0" alt="View Zachary Manring's profile on LinkedIn">
+        
+    </a>
                     <br>
-                  <a href=mailto:manring.zac@gmail.com>Email</a>  
+  <!-- Place this tag where you want the button to render. -->
+<a class="github-button" href="https://github.com/zacm08" data-style="mega" aria-label="Follow @zacm08 on GitHub">Follow @zacm08</a>
                     </h3>
                     <h3 id="contact">•Brian McDermott
                     <br>
-                    <a href="https://www.linkedin.com/in/brianmcdermott248">LinkedIn</a>
+                    <a href="https://www.linkedin.com/pub/brian-mcdermott/111/818/208">
+      
+          <img src="https://static.licdn.com/scds/common/u/img/webpromo/btn_myprofile_160x33.png" width="160" height="33" border="0" alt="View Brian McDermott's profile on LinkedIn">
+        
+    </a>
                     <br>
-                     <a href="mailto:brianmcdermott248@gmail.com">Email</a></h3>
+                    <a class="github-button" href="https://github.com/BrianMcDermott" data-style="mega" aria-label="Follow @BrianMcDermott on GitHub">Follow @BrianMcDermott</a>
+                    </h3>
                 </div>
             </div>
         </div>
     </section>
-
-
-
-    <!-- jQuery -->
-    <script src="js/jquery-1.12.3.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script> 
-
-    <!-- Scrolling Nav JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/scrolling-nav.js"></script>
 <script>
     function setupGetRadio() {
     	$("#radioResults").html("");
@@ -222,7 +220,7 @@ font-family: Helvetica;
  <script>
     var map;
       function initMap() {
-          var stylearray = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#ea0000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#c9323b"},{"weight":1.2}]},{"featureType":"administrative.locality","elementType":"geometry.fill","stylers":[{"lightness":"-1"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"lightness":"0"},{"saturation":"0"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#c9323b"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#99282f"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#99282f"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#090228"}]}];
+          var stylearray = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#ea0000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#ea0000"},{"weight":1.2}]},{"featureType":"administrative.locality","elementType":"geometry.fill","stylers":[{"lightness":"-1"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"lightness":"0"},{"saturation":"0"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#ea0000"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#99282f"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#99282f"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#090228"}]}];
 
 /*     	  var stylearray = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
  */          map = new google.maps.Map(document.getElementById('map'), {
@@ -285,6 +283,19 @@ function stop() {
     $('#loading').show();
 } */
 </script>
+
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- jQuery -->
+    <script src="js/jquery-1.12.3.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script> 
+
+    <!-- Scrolling Nav JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/scrolling-nav.js"></script>
+
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
