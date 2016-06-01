@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.css"/> -->
-    <!-- Bootstrap Core CSS -->
-    <!-- Custom CSS -->
+
     <link href="css/bootstrap1.min.css" rel="stylesheet">
     
     <link href="css/scrolling-nav.css" rel="stylesheet">
@@ -23,6 +21,9 @@
 
 
     <style>
+    a {
+    color: black;
+}
 #map {
     height: 100%;
     width: 50%;
@@ -58,14 +59,14 @@ h1 {
      text-shadow: .75px .75px 0px #c43235; 
 }
 h2 {
-    font-size: 35px;
+    font-size: 28px;
     color: #e6000;
     font-weight: bold;
     font-family: HarabaraHand,"Helvetica", Georgia, Serif;
    text-shadow: .5px .5px 0px #c43235;
 }
 h3 {
-    font-size: 45px;
+    font-size: 22px;
     color: #e6000;
     font-weight: bold;
     font-family: Helvetica;
@@ -161,19 +162,11 @@ font-family: Helvetica;
             <br>
             <br>
             	3.Use the Sorters/Search Bars to find your intended genre</h2>
-          <!--   <img src="http://i1269.photobucket.com/albums/jj591/aditya9172/loaing2.gif">  -->
             </div>
      </div>
        
  <div id="map"></div>
           
-      <!--   <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>About Section</h1>
-                </div>
-            </div>
-        </div> -->
     </section>
        <!-- Contact Section -->
     <section id="contact" class="contact-section">
@@ -181,13 +174,17 @@ font-family: Helvetica;
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Contact Us</h1>
-                    <h3 id="contact">Zac Manring: https://www.linkedin.com/in/zacharymanring
+                    <h3 id="contact"> •Zac Manring
                     <br>
-                    manring.zac@gmail.com
+                    <a href=https://www.linkedin.com/in/zacharymanring>LinkedIn</a>
+                    <br>
+                  <a href=mailto:manring.zac@gmail.com>Email</a>  
                     </h3>
-                    <h3 id="contact">Brian McDermott: https://www.linkedin.com/in/brianmcdermott248
+                    <h3 id="contact">•Brian McDermott
                     <br>
-                    brianmcdermott248@gmail.com</h3>
+                    <a href="https://www.linkedin.com/in/brianmcdermott248">LinkedIn</a>
+                    <br>
+                     <a href="mailto:brianmcdermott248@gmail.com">Email</a></h3>
                 </div>
             </div>
         </div>
@@ -210,6 +207,7 @@ font-family: Helvetica;
     	var banner = "<thead><tr><th>Call Sign</th><th>Frequency</th><th>City</th><th>Genre</th></tr></thead>";
 							$("#radioResults").append(banner);
    	$('#radioResults').DataTable( {
+   			responsive: true,
    			destroy: true,
             "ajax": "RadioServlet",
             "columns": [
@@ -224,8 +222,10 @@ font-family: Helvetica;
  <script>
     var map;
       function initMap() {
-    	  var stylearray = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
-          map = new google.maps.Map(document.getElementById('map'), {
+          var stylearray = [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"color":"#ffffff"}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"off"}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#ea0000"}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#c9323b"},{"weight":1.2}]},{"featureType":"administrative.locality","elementType":"geometry.fill","stylers":[{"lightness":"-1"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.fill","stylers":[{"lightness":"0"},{"saturation":"0"}]},{"featureType":"administrative.neighborhood","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.stroke","stylers":[{"weight":"0.01"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#c9323b"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#99282f"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#99282f"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#99282f"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#090228"}]}];
+
+/*     	  var stylearray = [{"featureType":"landscape","stylers":[{"saturation":-100},{"lightness":65},{"visibility":"on"}]},{"featureType":"poi","stylers":[{"saturation":-100},{"lightness":51},{"visibility":"simplified"}]},{"featureType":"road.highway","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"road.arterial","stylers":[{"saturation":-100},{"lightness":30},{"visibility":"on"}]},{"featureType":"road.local","stylers":[{"saturation":-100},{"lightness":40},{"visibility":"on"}]},{"featureType":"transit","stylers":[{"saturation":-100},{"visibility":"simplified"}]},{"featureType":"administrative.province","stylers":[{"visibility":"off"}]},{"featureType":"water","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":-25},{"saturation":-100}]},{"featureType":"water","elementType":"geometry","stylers":[{"hue":"#ffff00"},{"lightness":-25},{"saturation":-97}]}];
+ */          map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           styles: stylearray,
 
@@ -288,13 +288,8 @@ function stop() {
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_nuDgJ6rT-NlO6mFMJbUEoNRk9uDD2xg&callback=initMap">
     </script>
-<!--     <script type="text/javascript" src="https://cdn.datatables.net/r/ju-1.11.4/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script> 
- -->
 <script type="text/javascript" src="js/datatables.min.js"></script> 
-
- 
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11,r-2.0.2/datatables.min.js"></script>
- -->    
+   
 </body>
 
 </html>
